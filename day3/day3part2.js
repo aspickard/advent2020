@@ -14,7 +14,9 @@ const checkGrid = (xdelta, ydelta, numbers) => {
   for (let i=0; i<lines - 1; i++) {
     x += xdelta
     y += ydelta
-    count += checkSquare(x % length, y, numbers)
+    if (y < lines) {
+      count += checkSquare(x % length, y, numbers)
+    }
   }
   return count
 }
@@ -26,14 +28,17 @@ const main = async () => {
     })
 
     let numbers = []
-    let length = 0
 
     readInterface.on('line', (line) => {
       numbers.push(line.split(''))
     })
 
     readInterface.on('close', () => {
-      let count = checkGrid(3, 1, numbers)
+      let count = checkGrid(1, 1, numbers)
+      count = count * checkGrid(3, 1, numbers)
+      count = count * checkGrid(5, 1, numbers)
+      count = count * checkGrid(7, 1, numbers)
+      count = count * checkGrid(1, 2, numbers)
       console.log(count)
     })
   }
